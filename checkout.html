@@ -1,0 +1,497 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | ToolNest</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      color: #1e293b;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: auto;
+      padding: 24px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 24px #00000012;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .cart {
+      padding: 16px;
+      margin: 18px 0;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .item-name {
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .item-detail {
+      margin-top: 5px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .totals {
+      margin-top: 16px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 10px 0;
+    }
+
+    .grand-total {
+      padding-top: 12px;
+      border-top: 2px solid #cbd5e1;
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 22px;
+      border: 0;
+      border-radius: 8px;
+      background: #123b68;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover:not(:disabled) {
+      background: #0b2b4d;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 12px;
+      color: #123b68;
+    }
+
+    #message {
+      margin-top: 16px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .success {
+      color: #137333;
+    }
+
+    .error {
+      color: #b42318;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>ToolNest Checkout</h1>
+    <p>Enter your delivery details to place your order.</p>
+
+    <section class="cart" aria-labelledby="cart-heading">
+      <h2 id="cart-heading">Your Cart</h2>
+
+      <div id="cart-items" aria-live="polite">
+        Loading cart...
+      </div>
+
+      <div id="cart-totals" class="totals"></div>
+
+      <a class="back-link" href="cart.html">
+        ← Return to cart
+      </a>
+    </section>
+
+    <form id="checkout-form">
+      <label for="customerName">Full name</label>
+      <input
+        id="customerName"
+        name="customerName"
+        autocomplete="name"
+        required
+        maxlength="120"
+      >
+
+      <label for="email">Email</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+        maxlength="160"
+      >
+
+      <label for="phone">Phone number</label>
+      <input
+        id="phone"
+        name="phone"
+        type="tel"
+        autocomplete="tel"
+        required
+        maxlength="40"
+      >
+
+      <label for="address">Delivery address</label>
+      <textarea
+        id="address"
+        name="address"
+        autocomplete="street-address"
+        required
+        maxlength="500"
+      ></textarea>
+
+      <label for="city">City</label>
+      <input
+        id="city"
+        name="city"
+        autocomplete="address-level2"
+        required
+        maxlength="100"
+      >
+
+      <label for="deliveryMethod">Delivery method</label>
+      <select id="deliveryMethod" name="deliveryMethod" required>
+        <option value="standard">Standard delivery</option>
+        <option value="express">Express delivery (+ Rs. 500)</option>
+      </select>
+
+      <label for="paymentMethod">Payment method</label>
+      <select id="paymentMethod" name="paymentMethod" required>
+        <option value="cod">Cash on Delivery</option>
+        <option value="bank_transfer">Bank Transfer</option>
+        <option value="easypaisa">Easypaisa</option>
+        <option value="jazzcash">JazzCash</option>
+      </select>
+
+      <button id="place-order" type="submit">
+        Place Order
+      </button>
+    </form>
+
+    <div id="message" role="status" aria-live="polite"></div>
+  </main>
+
+  <script>
+    'use strict';
+
+    const form = document.getElementById('checkout-form');
+    const message = document.getElementById('message');
+    const placeButton = document.getElementById('place-order');
+    const cartItemsElement = document.getElementById('cart-items');
+    const cartTotalsElement = document.getElementById('cart-totals');
+    const deliverySelect = document.getElementById('deliveryMethod');
+
+    // IMPORTANT:
+    // script.js and cart.html use this exact storage key.
+    const CART_KEY = 'toolnest_cart';
+
+    const EXPRESS_DELIVERY_FEE = 500;
+
+    let cart = [];
+
+    function money(amount) {
+      return 'Rs. ' + Number(amount).toLocaleString('en-PK', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function readCart() {
+      try {
+        const stored = localStorage.getItem(CART_KEY);
+
+        if (!stored) {
+          return [];
+        }
+
+        const parsed = JSON.parse(stored);
+
+        if (!Array.isArray(parsed)) {
+          return [];
+        }
+
+        return parsed
+          .filter(item =>
+            item &&
+            typeof item === 'object' &&
+            (typeof item.name === 'string' && item.name.trim()) &&
+            Number.isFinite(Number(item.price)) &&
+            Number(item.price) >= 0 &&
+            Number.isInteger(Number(item.quantity)) &&
+            Number(item.quantity) > 0
+          )
+          .map(item => ({
+            name: item.name.trim(),
+            price: Number(item.price),
+            quantity: Number(item.quantity)
+          }));
+      } catch (error) {
+        console.error('Unable to read ToolNest cart:', error);
+        return [];
+      }
+    }
+
+    function getSubtotal() {
+      return cart.reduce((sum, item) => {
+        return sum + item.price * item.quantity;
+      }, 0);
+    }
+
+    function getDeliveryFee() {
+      return deliverySelect.value === 'express'
+        ? EXPRESS_DELIVERY_FEE
+        : 0;
+    }
+
+    function updateButton() {
+      placeButton.disabled = cart.length === 0;
+    }
+
+    function displayCart() {
+      cart = readCart();
+      cartItemsElement.replaceChildren();
+      cartTotalsElement.replaceChildren();
+
+      if (cart.length === 0) {
+        cartItemsElement.textContent =
+          'Your cart is empty. Return to the shop and add a product.';
+
+        updateButton();
+        return;
+      }
+
+      cart.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'cart-item';
+
+        const details = document.createElement('div');
+
+        const name = document.createElement('div');
+        name.className = 'item-name';
+        name.textContent = item.name;
+
+        const detail = document.createElement('div');
+        detail.className = 'item-detail';
+        detail.textContent =
+          money(item.price) + ' × ' + item.quantity;
+
+        details.append(name, detail);
+
+        const lineTotal = document.createElement('strong');
+        lineTotal.textContent = money(item.price * item.quantity);
+
+        row.append(details, lineTotal);
+        cartItemsElement.appendChild(row);
+      });
+
+      const subtotal = getSubtotal();
+      const delivery = getDeliveryFee();
+
+      function addTotalRow(label, value, isGrandTotal = false) {
+        const row = document.createElement('div');
+        row.className = 'total-row';
+
+        if (isGrandTotal) {
+          row.classList.add('grand-total');
+        }
+
+        const labelElement = document.createElement('span');
+        labelElement.textContent = label;
+
+        const valueElement = document.createElement('span');
+        valueElement.textContent = value;
+
+        row.append(labelElement, valueElement);
+        cartTotalsElement.appendChild(row);
+      }
+
+      addTotalRow('Subtotal', money(subtotal));
+
+      addTotalRow(
+        'Delivery',
+        delivery === 0 ? 'Standard fee (as applicable)' : money(delivery)
+      );
+
+      addTotalRow(
+        'Estimated total',
+        money(subtotal + delivery),
+        true
+      );
+
+      updateButton();
+    }
+
+    deliverySelect.addEventListener('change', displayCart);
+
+    // Display the cart when checkout opens.
+    displayCart();
+
+    form.addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      // Read the latest saved cart before submitting.
+      cart = readCart();
+
+      if (cart.length === 0) {
+        message.className = 'error';
+        message.textContent =
+          'Your cart is empty. Return to the shop, add a product, and try again.';
+
+        displayCart();
+        return;
+      }
+
+      if (!form.reportValidity()) {
+        return;
+      }
+
+      const data = new FormData(form);
+
+      const payload = {
+        customerName: String(data.get('customerName') || '').trim(),
+        email: String(data.get('email') || '').trim(),
+        phone: String(data.get('phone') || '').trim(),
+        address: String(data.get('address') || '').trim(),
+        city: String(data.get('city') || '').trim(),
+        deliveryMethod: data.get('deliveryMethod'),
+        paymentMethod: data.get('paymentMethod'),
+
+        // Preserve the cart format expected by the existing store.
+        items: cart.map(item => ({
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity
+        }))
+      };
+
+      placeButton.disabled = true;
+      placeButton.textContent = 'Placing order...';
+
+      message.className = '';
+      message.textContent = '';
+
+      try {
+        const response = await fetch('/api/orders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (
+          !response.ok ||
+          !result.success ||
+          !result.order ||
+          !result.order.orderNumber
+        ) {
+          throw new Error(
+            result.message ||
+            'Order failed (HTTP ' + response.status + ').'
+          );
+        }
+
+        message.className = 'success';
+
+        message.textContent =
+          'Order confirmed!\n' +
+          'Order number: ' + result.order.orderNumber + '\n' +
+          'Total: ' + (result.order.currency || 'PKR') + ' ' +
+          result.order.total + '\n' +
+          'Payment status: ' +
+          (result.order.paymentStatus || 'Pending');
+
+        // Only clear the cart after the server confirms the order.
+        localStorage.removeItem(CART_KEY);
+
+        cart = [];
+        displayCart();
+        form.reset();
+
+      } catch (error) {
+        console.error('Checkout error:', error);
+
+        message.className = 'error';
+        message.textContent =
+          'Order was not confirmed: ' + error.message +
+          '\nYour cart has been kept. Please try again after checking the server.';
+
+      } finally {
+        placeButton.textContent = 'Place Order';
+        updateButton();
+      }
+    });
+  </script>
+</body>
+</html>

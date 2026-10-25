@@ -1,0 +1,530 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Review your ToolNest shopping cart.">
+    <title>Your Cart | ToolNest</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .cart-page {
+            max-width: 1100px;
+            min-height: 55vh;
+            margin: 0 auto;
+            padding: 55px 6%;
+        }
+
+        .cart-page h1 {
+            margin-bottom: 8px;
+            color: #142b49;
+            font-size: 34px;
+        }
+
+        .cart-intro {
+            margin-bottom: 30px;
+            color: #718096;
+        }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 310px;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .cart-items,
+        .cart-summary {
+            padding: 22px;
+            border: 1px solid #e7ebf2;
+            border-radius: 16px;
+            background: white;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 12px;
+            padding: 20px 0;
+            border-bottom: 1px solid #e7ebf2;
+        }
+
+        .cart-item:first-child {
+            padding-top: 0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item h3 {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .cart-item p {
+            color: #718096;
+            font-size: 13px;
+        }
+
+        .cart-item-price {
+            color: #142b49;
+            font-weight: 800;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .quantity-button {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #e7ebf2;
+            border-radius: 7px;
+            background: #f6f8fc;
+            color: #142b49;
+            font-weight: 700;
+        }
+
+        .quantity-value {
+            min-width: 24px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .remove-button {
+            margin-left: 8px;
+            padding: 6px 8px;
+            border: none;
+            background: transparent;
+            color: #c0392b;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .cart-summary h2 {
+            margin-bottom: 20px;
+            color: #142b49;
+            font-size: 21px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 14px 0;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .summary-total {
+            padding-top: 16px;
+            border-top: 1px solid #e7ebf2;
+            color: #142b49;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .cart-action {
+            display: block;
+            width: 100%;
+            margin-top: 18px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #2459d3;
+            color: white;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .cart-action:hover {
+            background: #142b49;
+        }
+
+        .continue-link {
+            display: block;
+            margin-top: 15px;
+            color: #2459d3;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .empty-cart {
+            padding: 45px 15px;
+            text-align: center;
+        }
+
+        .empty-cart .empty-icon {
+            margin-bottom: 12px;
+            font-size: 48px;
+        }
+
+        .empty-cart h2 {
+            margin-bottom: 8px;
+            color: #142b49;
+        }
+
+        .empty-cart p {
+            margin-bottom: 22px;
+            color: #718096;
+        }
+
+        .cart-notice {
+            margin-top: 16px;
+            color: #718096;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 750px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-page {
+                padding: 35px 5%;
+            }
+
+            .cart-page h1 {
+                font-size: 29px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .cart-items,
+            .cart-summary {
+                padding: 15px;
+            }
+
+            .cart-item {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">Your everyday store for tools and technology</div>
+
+    <header class="header">
+        <a href="index.html" class="logo">Tool<span>Nest.</span></a>
+        <a href="index.html#products" class="primary-button">Continue Shopping</a>
+    </header>
+
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="index.html#categories">Categories</a>
+        <a href="index.html#products">Products</a>
+        <a href="cart.html" aria-current="page">Your Cart</a>
+    </nav>
+
+    <main class="cart-page">
+        <h1>Your Shopping Cart</h1>
+        <p class="cart-intro">Review your items before continuing.</p>
+
+        <div id="cartContent" aria-live="polite">
+            <p>Loading your cart...</p>
+        </div>
+    </main>
+
+    <footer>
+        <div>
+            <a href="index.html" class="logo footer-logo">Tool<span>Nest.</span></a>
+            <p>Your everyday store for tools and technology.</p>
+        </div>
+
+        <div>
+            <strong>Need Help?</strong>
+            <p>Contact the store owner for assistance with your order.</p>
+        </div>
+
+        <p class="copyright">
+            © <span id="year"></span> ToolNest. All rights reserved.
+        </p>
+    </footer>
+
+    <script>
+        "use strict";
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const cartContent = document.getElementById("cartContent");
+            const year = document.getElementById("year");
+            const STORAGE_KEY = "toolnest_cart";
+
+            if (year) {
+                year.textContent = new Date().getFullYear();
+            }
+
+            function readCart() {
+                try {
+                    const data = JSON.parse(
+                        localStorage.getItem(STORAGE_KEY) || "[]"
+                    );
+
+                    if (!Array.isArray(data)) {
+                        return [];
+                    }
+
+                    return data.filter(function (item) {
+                        return item &&
+                            typeof item.name === "string" &&
+                            Number.isFinite(item.price) &&
+                            item.price >= 0 &&
+                            Number.isInteger(item.quantity) &&
+                            item.quantity > 0;
+                    });
+                } catch (error) {
+                    return [];
+                }
+            }
+
+            function saveCart(cart) {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+                    return true;
+                } catch (error) {
+                    alert("Unable to save cart changes in this browser.");
+                    return false;
+                }
+            }
+
+            function formatPrice(amount) {
+                return "Rs. " + amount.toLocaleString("en-PK");
+            }
+
+            function createElement(tag, className, text) {
+                const element = document.createElement(tag);
+
+                if (className) {
+                    element.className = className;
+                }
+
+                if (text !== undefined) {
+                    element.textContent = text;
+                }
+
+                return element;
+            }
+
+            function renderCart() {
+                const cart = readCart();
+                cartContent.replaceChildren();
+
+                if (cart.length === 0) {
+                    const empty = createElement("section", "empty-cart");
+                    empty.appendChild(
+                        createElement("div", "empty-icon", "🛒")
+                    );
+                    empty.appendChild(
+                        createElement("h2", "", "Your cart is empty")
+                    );
+                    empty.appendChild(
+                        createElement(
+                            "p",
+                            "",
+                            "Explore our store and add something you like."
+                        )
+                    );
+
+                    const shopLink = createElement(
+                        "a",
+                        "primary-button",
+                        "Browse Products"
+                    );
+
+                    shopLink.href = "index.html#products";
+                    empty.appendChild(shopLink);
+                    cartContent.appendChild(empty);
+                    return;
+                }
+
+                const layout = createElement("div", "cart-layout");
+                const itemsPanel = createElement("section", "cart-items");
+                const summary = createElement("aside", "cart-summary");
+
+                itemsPanel.setAttribute("aria-label", "Cart items");
+
+                cart.forEach(function (item, index) {
+                    const row = createElement("article", "cart-item");
+                    const details = createElement("div");
+                    const priceArea = createElement("div");
+
+                    details.appendChild(
+                        createElement("h3", "", item.name)
+                    );
+
+                    details.appendChild(
+                        createElement(
+                            "p",
+                            "",
+                            formatPrice(item.price) + " each"
+                        )
+                    );
+
+                    const actions = createElement("div", "cart-item-actions");
+
+                    const decrease = createElement(
+                        "button",
+                        "quantity-button",
+                        "−"
+                    );
+                    decrease.type = "button";
+                    decrease.setAttribute(
+                        "aria-label",
+                        "Decrease quantity of " + item.name
+                    );
+
+                    decrease.addEventListener("click", function () {
+                        const updated = readCart();
+
+                        if (!updated[index]) {
+                            return;
+                        }
+
+                        if (updated[index].quantity > 1) {
+                            updated[index].quantity -= 1;
+                        } else {
+                            updated.splice(index, 1);
+                        }
+
+                        if (saveCart(updated)) {
+                            renderCart();
+                        }
+                    });
+
+                    const quantity = createElement(
+                        "span",
+                        "quantity-value",
+                        String(item.quantity)
+                    );
+
+                    const increase = createElement(
+                        "button",
+                        "quantity-button",
+                        "+"
+                    );
+                    increase.type = "button";
+                    increase.setAttribute(
+                        "aria-label",
+                        "Increase quantity of " + item.name
+                    );
+
+                    increase.addEventListener("click", function () {
+                        const updated = readCart();
+
+                        if (!updated[index]) {
+                            return;
+                        }
+
+                        updated[index].quantity += 1;
+
+                        if (saveCart(updated)) {
+                            renderCart();
+                        }
+                    });
+
+                    const remove = createElement(
+                        "button",
+                        "remove-button",
+                        "Remove"
+                    );
+                    remove.type = "button";
+
+                    remove.addEventListener("click", function () {
+                        const updated = readCart();
+                        updated.splice(index, 1);
+
+                        if (saveCart(updated)) {
+                            renderCart();
+                        }
+                    });
+
+                    actions.append(decrease, quantity, increase, remove);
+                    details.appendChild(actions);
+
+                    priceArea.appendChild(
+                        createElement(
+                            "p",
+                            "cart-item-price",
+                            formatPrice(item.price * item.quantity)
+                        )
+                    );
+
+                    row.append(details, priceArea);
+                    itemsPanel.appendChild(row);
+                });
+
+                const subtotal = cart.reduce(function (sum, item) {
+                    return sum + item.price * item.quantity;
+                }, 0);
+
+                summary.appendChild(
+                    createElement("h2", "", "Order Summary")
+                );
+
+                const subtotalRow = createElement("div", "summary-row");
+                subtotalRow.append(
+                    createElement("span", "", "Subtotal"),
+                    createElement("strong", "", formatPrice(subtotal))
+                );
+
+                const deliveryRow = createElement("div", "summary-row");
+                deliveryRow.append(
+                    createElement("span", "", "Delivery"),
+                    createElement("span", "", "Calculated at checkout")
+                );
+
+                const totalRow = createElement(
+                    "div",
+                    "summary-row summary-total"
+                );
+
+                totalRow.append(
+                    createElement("span", "", "Subtotal"),
+                    createElement("strong", "", formatPrice(subtotal))
+                );
+
+                summary.append(subtotalRow, deliveryRow, totalRow);
+
+                const checkout = createElement(
+                    "a",
+                    "cart-action",
+                    "Continue to Checkout"
+                );
+
+                checkout.href = "checkout.html";
+
+                summary.appendChild(checkout);
+
+                const continueLink = createElement(
+                    "a",
+                    "continue-link",
+                    "← Continue Shopping"
+                );
+
+                continueLink.href = "index.html#products";
+                summary.appendChild(continueLink);
+
+                summary.appendChild(
+                    createElement(
+                        "p",
+                        "cart-notice",
+                        "Demo cart only. Orders and payments are not submitted " +
+                        "to a store server yet."
+                    )
+                );
+
+                layout.append(itemsPanel, summary);
+                cartContent.appendChild(layout);
+            }
+
+            renderCart();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,500 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Shop Beauty, Makeup & Tools | ToolNest Pakistan</title>
+<style>
+:root{--navy:#17395c;--orange:#f57224;--ink:#252525;--muted:#777;--line:#e9e9e9;--bg:#f5f6f8;--green:#16834a}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.top{background:#102b47;color:white;padding:9px 5%;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12px}
+header{background:white;padding:17px 5%;display:grid;grid-template-columns:auto minmax(160px,1fr) auto;align-items:center;gap:24px;border-bottom:1px solid var(--line)}
+.logo{font-size:29px;font-weight:900;color:var(--navy);letter-spacing:-1px}.logo span{color:var(--orange)}
+.search{display:flex;height:44px;border:2px solid var(--orange);border-radius:4px;overflow:hidden}
+.search input{min-width:0;flex:1;border:0;outline:0;padding:0 12px}
+.search button{border:0;background:var(--orange);color:white;padding:0 18px;font-weight:bold}
+.actions{display:flex;gap:17px;font-size:12px;color:var(--navy)}
+nav{display:flex;gap:25px;padding:0 5%;background:white;overflow-x:auto;white-space:nowrap;border-bottom:1px solid var(--line)}
+nav a{padding:15px 0;font-size:13px}
+nav a:hover{color:var(--orange)}
+.hero{padding:22px 5%;background:#e9edf2}
+.hero-inner{max-width:1450px;margin:auto;background:#17395c;color:white;display:grid;grid-template-columns:1fr 1fr;min-height:265px;border-radius:6px;overflow:hidden}
+.hero-copy{padding:35px 8%;align-self:center}
+.eyebrow{font-size:12px;letter-spacing:1.5px;color:#ffd2ad;text-transform:uppercase;font-weight:bold}
+.hero h1{font-size:clamp(28px,4vw,43px);line-height:1.15;margin:12px 0}
+.hero p{font-size:14px;line-height:1.7;color:#e3eaf2;max-width:480px}
+.hero img{width:100%;height:100%;min-height:265px;object-fit:cover;display:block}
+.cta{display:inline-block;background:var(--orange);color:white;border:0;border-radius:4px;padding:12px 19px;font-weight:bold;font-size:13px;margin-top:8px}
+.trust{max-width:1450px;margin:15px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.trust div{background:white;border:1px solid var(--line);padding:14px;font-size:12px;line-height:1.6}
+.trust strong{display:block;color:var(--navy)}
+main{max-width:1450px;margin:auto;padding:25px 5% 45px}
+.breadcrumb{font-size:12px;color:var(--muted);margin-bottom:18px}
+.heading{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:20px}
+.heading h2{font-size:24px;margin:0 0 7px}
+.heading p{font-size:13px;color:var(--muted);margin:0}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px;align-items:start}
+.sidebar,.toolbar,.product{background:white;border:1px solid var(--line);border-radius:5px}
+.side-section{padding:17px;border-bottom:1px solid var(--line)}
+.side-section:last-child{border-bottom:0}
+.side-section h3{font-size:14px;margin:0 0 15px}
+.categories{display:flex;flex-direction:column;gap:15px}
+.cat{display:flex;align-items:center;gap:9px;font-size:13px;cursor:pointer}
+.cat input{accent-color:var(--orange)}
+.side-note{font-size:12px;line-height:1.7;color:var(--muted)}
+.toolbar{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+#count{font-size:12px;color:var(--muted)}
+.toolbar select{padding:9px;border:1px solid #ddd;border-radius:4px;background:white;max-width:65%}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.product{min-width:0;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s}
+.product:hover{box-shadow:0 5px 18px #17395c17}
+.art{height:190px;position:relative;padding:10px;background:#fff;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #f0f0f0}
+.art img{width:100%;height:100%;object-fit:contain}
+.badge{position:absolute;left:9px;top:9px;background:#fff0e6;color:#bd4d0c;padding:5px 7px;font-size:10px;font-weight:bold;z-index:1}
+.body{padding:13px;display:flex;flex-direction:column;flex:1}
+.brand{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:#777;margin-bottom:7px}
+.product h3{font-size:14px;line-height:1.5;margin:0 0 8px;min-height:42px}
+.desc{font-size:12px;line-height:1.6;color:var(--muted);margin:0 0 10px;flex:1}
+.price{font-size:19px;font-weight:800;color:var(--navy);margin:5px 0 12px}
+.add{background:var(--orange);color:white;border:0;border-radius:4px;padding:12px 8px;font-weight:bold;font-size:12px;width:100%}
+.add:hover,.cta:hover,.search button:hover{filter:brightness(.93)}
+.notice{display:none;padding:12px 14px;background:#eaf7ee;border:1px solid #c6e9d0;color:#176b37;border-radius:4px;font-size:13px;margin-bottom:14px}
+.notice.show{display:block}
+.empty{grid-column:1/-1;background:white;padding:40px 15px;text-align:center;color:var(--muted)}
+.info{background:white;border-block:1px solid var(--line);padding:25px 5%;display:grid;grid-template-columns:repeat(3,1fr);gap:25px}
+.info h3{font-size:14px;color:var(--navy);margin:0 0 8px}
+.info p{font-size:12px;color:var(--muted);line-height:1.7;margin:0}
+footer{background:#102338;color:#e1e7ee;padding:32px 5% 18px}
+.footgrid{max-width:1450px;margin:auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:30px}
+.footlogo{font-size:25px;font-weight:900}.footlogo span{color:var(--orange)}
+.foottext{font-size:12px;line-height:1.8;color:#bac6d3;max-width:350px}
+footer h3{font-size:13px;margin:4px 0 14px}
+.links{display:flex;flex-direction:column;gap:12px;font-size:12px;color:#bac6d3}
+.links a:hover{color:#ffad76}
+.bottom{max-width:1450px;margin:25px auto 0;padding-top:16px;border-top:1px solid #314458;font-size:11px;color:#bac6d3;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+ header{grid-template-columns:1fr auto;gap:13px;padding:14px 4%}
+ .logo{font-size:25px}.search{grid-column:1/-1;grid-row:2}
+ nav{padding:0 4%;gap:20px}
+ .hero{padding:14px 4%}.hero-inner{grid-template-columns:1fr}
+ .hero-copy{padding:28px 24px}.hero img{height:190px;min-height:190px;max-height:220px}
+ .trust{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:12px}
+ main{padding:22px 4% 35px}
+ .layout{grid-template-columns:1fr}
+ .categories{flex-direction:row;flex-wrap:wrap;gap:13px 16px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .art{height:155px}.body{padding:10px}
+ .product h3{font-size:13px;min-height:39px}.price{font-size:17px}
+ .info{grid-template-columns:1fr;gap:20px}
+ .footgrid{grid-template-columns:1fr 1fr;gap:24px}
+ .footbrand{grid-column:1/-1}
+}
+@media(max-width:380px){.actions{gap:9px;font-size:11px}.art{height:130px}.toolbar{align-items:flex-start;flex-direction:column}.toolbar select{max-width:100%}}
+</style>
+</head>
+<body>
+<div class="top">ToolNest Pakistan — Hardware, Beauty & Personal Care <span>Prices in PKR · Online shopping</span></div>
+
+<header>
+  <a class="logo" href="index.html">Tool<span>Nest</span></a>
+  <form class="search" id="search-form">
+    <input id="search" type="search" placeholder="Search products, brands and categories..." aria-label="Search products">
+    <button type="submit">Search</button>
+  </form>
+  <div class="actions">
+    <a href="loginform.html">Account</a>
+    <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+  </div>
+</header>
+
+<nav aria-label="Main categories">
+  <a href="index.html">Home</a>
+  <a href="#products" data-link-category="all">All Products</a>
+  <a href="#products" data-link-category="power-tools">Power Tools</a>
+  <a href="#products" data-link-category="hand-tools">Hand Tools</a>
+  <a href="#products" data-link-category="skincare">Skincare</a>
+  <a href="#products" data-link-category="haircare">Haircare</a>
+  <a href="#products" data-link-category="foundation">Foundation</a>
+  <a href="#products" data-link-category="makeup">Makeup</a>
+  <a href="#products" data-link-category="beauty-tools">Beauty Tools</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="eyebrow">One marketplace, more choices</div>
+      <h1>Tools, beauty and everyday essentials.</h1>
+      <p>Explore workshop equipment, skincare, haircare, foundation and makeup in one convenient store.</p>
+      <a class="cta" href="#products">Explore Products →</a>
+    </div>
+    <img src="https://s3-ap-southeast-1.amazonaws.com/content-platform-production/sephora-content-platform-_52405f84-7c9d-4ce2-96c4-c92106ac14bd" alt="Beauty products from different cosmetics categories" onerror="this.style.display='none'">
+  </div>
+  <div class="trust">
+    <div><strong>Beauty & Personal Care</strong>Skincare, haircare and cosmetics</div>
+    <div><strong>Hardware & Power Tools</strong>Workshop and home essentials</div>
+    <div><strong>PKR Pricing</strong>Prices displayed in Pakistani rupees</div>
+    <div><strong>Easy Cart</strong>Add products before checkout</div>
+  </div>
+</section>
+
+<main>
+  <div class="breadcrumb"><a href="index.html">Home</a> / Shop</div>
+  <div class="heading">
+    <div><h2>Shop All Products</h2><p>Browse categories or search for a product or brand.</p></div>
+  </div>
+
+  <div id="notice" class="notice" role="status" aria-live="polite"></div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="side-section">
+        <h3>Categories</h3>
+        <div class="categories">
+          <label class="cat"><input type="radio" name="category" value="all" checked> All products</label>
+          <label class="cat"><input type="radio" name="category" value="power-tools"> Power tools</label>
+          <label class="cat"><input type="radio" name="category" value="hand-tools"> Hand tools</label>
+          <label class="cat"><input type="radio" name="category" value="skincare"> Skincare</label>
+          <label class="cat"><input type="radio" name="category" value="haircare"> Haircare</label>
+          <label class="cat"><input type="radio" name="category" value="foundation"> Foundation</label>
+          <label class="cat"><input type="radio" name="category" value="makeup"> Makeup</label>
+          <label class="cat"><input type="radio" name="category" value="beauty-tools"> Beauty tools</label>
+          <label class="cat"><input type="radio" name="category" value="accessories"> Accessories</label>
+          <label class="cat"><input type="radio" name="category" value="safety"> Safety equipment</label>
+        </div>
+      </div>
+      <div class="side-section">
+        <h3>Before ordering</h3>
+        <p class="side-note">Confirm product authenticity, shade, size, stock, warranty and delivery charges with your supplier before accepting orders.</p>
+      </div>
+    </aside>
+
+    <section id="products">
+      <div class="toolbar">
+        <span id="count">Loading products...</span>
+        <label><span style="font-size:12px;color:#777">Sort: </span>
+          <select id="sort" aria-label="Sort products">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name">Name: A to Z</option>
+          </select>
+        </label>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+  </div>
+</main>
+
+<section class="info">
+  <div><h3>Beauty & Makeup</h3><p>Check the product label, shade, size, ingredients and supplier before buying skincare or cosmetics.</p></div>
+  <div><h3>Hardware & Tools</h3><p>Review specifications and compatibility before choosing tools and accessories.</p></div>
+  <div><h3>Customer Support</h3><p>For questions about products and orders, visit the <a href="contact.html">Contact Us</a> page.</p></div>
+</section>
+
+<footer>
+  <div class="footgrid">
+    <div class="footbrand"><div class="footlogo">Tool<span>Nest</span></div><p class="foottext">A multi-category marketplace concept for hardware, beauty, skincare, haircare and everyday essentials in Pakistan.</p></div>
+    <div><h3>Customer Service</h3><div class="links"><a href="contact.html">Contact Us</a><a href="cart.html">Shopping Cart</a><a href="checkout.html">Checkout</a></div></div>
+    <div><h3>Explore</h3><div class="links"><a href="index.html">Home</a><a href="shop.html">Shop All Products</a><a href="about.html">About Us</a></div></div>
+  </div>
+  <div class="bottom"><span>© <span id="year"></span> ToolNest. All rights reserved.</span><span>Pakistan · Prices in PKR</span></div>
+</footer>
+
+<script>
+'use strict';
+
+const CART_KEY = 'toolnest_cart';
+
+/*
+  These are example catalog entries, not verified inventory.
+  Verify supplier, authenticity, stock and prices before selling.
+  Replace image URLs with product photos you have permission to use.
+*/
+const products = [
+  {
+    id:'TN001', name:'Cordless Power Drill', brand:'Workshop Essentials',
+    category:'power-tools', price:8500,
+    description:'Cordless drill for everyday drilling and fastening.',
+    image:'https://www.housedigest.com/img/gallery/is-dewalts-cordless-drill-kit-worth-buying-heres-what-reviews-are-saying/intro-1746134627.jpg'
+  },
+  {
+    id:'TN002', name:'Professional Tool Kit', brand:'Workshop Essentials',
+    category:'hand-tools', price:4200,
+    description:'Tool selection for home repairs and maintenance.',
+    image:'https://www.ridgetoolbox.com/cdn/shop/files/tarcxfjgdqlmjhxtqa3k.webp?v=1778090638&width=1200'
+  },
+  {
+    id:'TN003', name:'The Ordinary Hyaluronic Acid 2% + B5 Serum 30ml', brand:'The Ordinary',
+    category:'skincare', price:3999,
+    description:'Hydrating facial serum. Confirm product source and packaging.',
+    image:'https://theskintheory.pk/cdn/shop/files/bundle_photo_1_Cmp.jpg?v=1747753298&width=1000'
+  },
+  {
+    id:'TN004', name:'CeraVe Skin Renewing Night Cream', brand:'CeraVe',
+    category:'skincare', price:7999,
+    description:'Night cream example. Confirm exact size and local supplier price.',
+    image:'https://theskintheory.pk/cdn/shop/files/bundle_photo_1_Cmp.jpg?v=1747753298&width=1000'
+  },
+  {
+    id:'TN005', name:'L’Oréal Paris Elseve Haircare', brand:'L’Oréal Paris',
+    category:'haircare', price:2200,
+    description:'Haircare range example. Select the exact shampoo or conditioner variant.',
+    image:'https://www.alexandar-cosmetics.com/app.php/media/cache/resolve/mdl_8/images/page_editor_element_mobile_image/69392a692441b_LOREAL-MOB.jpg'
+  },
+  {
+    id:'TN006', name:'Olaplex No. 4 Bond Maintenance Shampoo', brand:'Olaplex',
+    category:'haircare', price:9500,
+    description:'Branded haircare example. Verify bottle size and supplier.',
+    image:'https://www.alexandar-cosmetics.com/app.php/media/cache/resolve/mdl_8/images/page_editor_element_mobile_image/69392a692441b_LOREAL-MOB.jpg'
+  },
+  {
+    id:'TN007', name:'Chiffon Matte Foundation', brand:'Pierre Cardin',
+    category:'foundation', price:1139.70,
+    description:'Foundation example. Shade and current price must be confirmed.',
+    image:'https://s3-ap-southeast-1.amazonaws.com/content-platform-production/sephora-content-platform-_52405f84-7c9d-4ce2-96c4-c92106ac14bd'
+  },
+  {
+    id:'TN008', name:'Maybelline Fit Me Matte + Poreless Foundation', brand:'Maybelline',
+    category:'foundation', price:2995,
+    description:'Foundation example. Confirm shade availability and supplier.',
+    image:'https://www.alexandar-cosmetics.com/app.php/media/cache/resolve/mdl_8/images/page_editor_element_mobile_image/69392a692441b_LOREAL-MOB.jpg'
+  },
+  {
+    id:'TN009', name:'Stay Long Lip Color Kiss Proof', brand:'Pierre Cardin',
+    category:'makeup', price:569.70,
+    description:'Lip color example. Confirm shade and current supplier price.',
+    image:'https://s3-ap-southeast-1.amazonaws.com/content-platform-production/sephora-content-platform-_52405f84-7c9d-4ce2-96c4-c92106ac14bd'
+  },
+  {
+    id:'TN010', name:'Make Up Fixing Spray 110ml', brand:'Pierre Cardin',
+    category:'makeup', price:1499,
+    description:'Makeup setting spray example. Verify availability before listing.',
+    image:'https://s3-ap-southeast-1.amazonaws.com/content-platform-production/sephora-content-platform-_52405f84-7c9d-4ce2-96c4-c92106ac14bd'
+  },
+  {
+    id:'TN011', name:'Hair Dryer', brand:'Beauty Tools',
+    category:'beauty-tools', price:4500,
+    description:'Hair styling appliance example. Add exact brand and specifications.',
+    image:'https://images.unsplash.com/photo-1522338242992-e1a54906a8da?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id:'TN012', name:'Makeup Brush Set', brand:'Beauty Tools',
+    category:'beauty-tools', price:1800,
+    description:'Brush set example. Confirm included brushes and materials.',
+    image:'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id:'TN013', name:'Precision Screwdriver Set', brand:'Workshop Essentials',
+    category:'hand-tools', price:1250,
+    description:'Compact screwdriver set for detailed repair jobs.',
+    image:'https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id:'TN014', name:'Workshop Safety Glasses', brand:'Safety Equipment',
+    category:'safety', price:450,
+    description:'Protective eyewear for suitable workshop tasks.',
+    image:'https://images.unsplash.com/photo-1581783898377-1c85bf937427?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id:'TN015', name:'Drill Bit Set', brand:'Workshop Essentials',
+    category:'accessories', price:1800,
+    description:'Drill bits for compatible tools.',
+    image:'https://www.ridgetoolbox.com/cdn/shop/files/tarcxfjgdqlmjhxtqa3k.webp?v=1778090638&width=1200'
+  }
+];
+
+const grid = document.getElementById('grid');
+const searchInput = document.getElementById('search');
+const sortSelect = document.getElementById('sort');
+const notice = document.getElementById('notice');
+
+const categoryLabels = {
+  'power-tools':'Power Tools',
+  'hand-tools':'Hand Tools',
+  skincare:'Skincare',
+  haircare:'Haircare',
+  foundation:'Foundation',
+  makeup:'Makeup',
+  'beauty-tools':'Beauty Tools',
+  accessories:'Accessories',
+  safety:'Safety Equipment'
+};
+
+function money(value) {
+  return 'Rs. ' + Number(value).toLocaleString('en-PK', {
+    minimumFractionDigits: Number(value) % 1 ? 2 : 0,
+    maximumFractionDigits: 2
+  });
+}
+
+function readCart() {
+  try {
+    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    return Array.isArray(cart) ? cart : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function updateCartCount() {
+  const count = readCart().reduce((total, item) => {
+    return total + Math.max(0, Number(item.quantity) || 0);
+  }, 0);
+  document.getElementById('cart-count').textContent = count;
+}
+
+function showNotice(message) {
+  notice.textContent = message;
+  notice.classList.add('show');
+}
+
+function addToCart(id) {
+  const product = products.find(item => item.id === id);
+  if (!product) return;
+
+  try {
+    const cart = readCart();
+    const existing = cart.find(item => item.id === product.id);
+
+    if (existing) {
+      existing.quantity = Math.max(1, Number(existing.quantity) || 1) + 1;
+    } else {
+      // Compatible with existing cart.html and checkout.html.
+      cart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: 1
+      });
+    }
+
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartCount();
+    showNotice(product.name + ' added to your cart.');
+  } catch (error) {
+    showNotice('Unable to save your cart. Check browser storage settings.');
+  }
+}
+
+function getCategory() {
+  const checked = document.querySelector('input[name="category"]:checked');
+  return checked ? checked.value : 'all';
+}
+
+function renderProducts() {
+  const query = searchInput.value.trim().toLowerCase();
+  const selectedCategory = getCategory();
+
+  let filtered = products.filter(product => {
+    const searchable = [
+      product.name,
+      product.brand,
+      product.description,
+      categoryLabels[product.category] || ''
+    ].join(' ').toLowerCase();
+
+    return (selectedCategory === 'all' || product.category === selectedCategory)
+      && searchable.includes(query);
+  });
+
+  if (sortSelect.value === 'price-low') filtered.sort((a,b) => a.price-b.price);
+  if (sortSelect.value === 'price-high') filtered.sort((a,b) => b.price-a.price);
+  if (sortSelect.value === 'name') filtered.sort((a,b) => a.name.localeCompare(b.name));
+
+  grid.replaceChildren();
+  document.getElementById('count').textContent = filtered.length + ' products';
+
+  if (!filtered.length) {
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.textContent = 'No products found. Try a different search or category.';
+    grid.appendChild(empty);
+    return;
+  }
+
+  filtered.forEach(product => {
+    const card = document.createElement('article');
+    card.className = 'product';
+
+    const art = document.createElement('div');
+    art.className = 'art';
+
+    const image = document.createElement('img');
+    image.src = product.image;
+    image.alt = product.name;
+    image.loading = 'lazy';
+    image.onerror = function () {
+      this.onerror = null;
+      this.style.display = 'none';
+      const fallback = document.createElement('div');
+      fallback.style.cssText = 'text-align:center;padding:15px;color:#777;font-size:12px';
+      fallback.textContent = 'Add a local product photo for ' + product.name;
+      art.appendChild(fallback);
+    };
+    art.appendChild(image);
+
+    const body = document.createElement('div');
+    body.className = 'body';
+
+    const brand = document.createElement('div');
+    brand.className = 'brand';
+    brand.textContent = product.brand;
+
+    const name = document.createElement('h3');
+    name.textContent = product.name;
+
+    const desc = document.createElement('p');
+    desc.className = 'desc';
+    desc.textContent = product.description;
+
+    const price = document.createElement('div');
+    price.className = 'price';
+    price.textContent = money(product.price);
+
+    const button = document.createElement('button');
+    button.className = 'add';
+    button.type = 'button';
+    button.textContent = 'ADD TO CART';
+    button.addEventListener('click', () => addToCart(product.id));
+
+    body.append(brand, name, desc, price, button);
+    card.append(art, body);
+    grid.appendChild(card);
+  });
+}
+
+document.getElementById('search-form').addEventListener('submit', event => {
+  event.preventDefault();
+  renderProducts();
+});
+searchInput.addEventListener('input', renderProducts);
+sortSelect.addEventListener('change', renderProducts);
+
+document.querySelectorAll('input[name="category"]').forEach(input => {
+  input.addEventListener('change', renderProducts);
+});
+
+document.querySelectorAll('[data-link-category]').forEach(link => {
+  link.addEventListener('click', () => {
+    const value = link.dataset.linkCategory;
+    const radio = document.querySelector('input[name="category"][value="' + value + '"]');
+    if (radio) {
+      radio.checked = true;
+      renderProducts();
+    }
+  });
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+renderProducts();
+updateCartCount();
+</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Contact ToolNest for product questions, order enquiries and customer support.">
+  <title>Contact Us | ToolNest</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033;line-height:1.6}
+    header{background:#102c4d;color:white;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+    .logo{font-size:27px;font-weight:800;color:#f0bd4c;text-decoration:none}
+    nav{display:flex;gap:18px;flex-wrap:wrap}
+    nav a{color:white;text-decoration:none;font-weight:600}
+    nav a:hover{color:#f0bd4c}
+    .hero{background:linear-gradient(120deg,#102c4d,#20527b);color:white;text-align:center;padding:48px 20px}
+    .hero h1{font-size:clamp(32px,5vw,44px);margin:0 0 10px}
+    .hero p{color:#e2eaf4;margin:0}
+    main{max-width:1050px;margin:auto;padding:35px 20px 55px}
+    .layout{display:grid;grid-template-columns:0.85fr 1.3fr;gap:24px;align-items:start}
+    .panel{background:white;padding:25px;border:1px solid #e2e8f0;border-radius:13px;box-shadow:0 5px 18px #102c4d08}
+    h2{color:#102c4d;margin-top:0}
+    .info{padding:14px 0;border-bottom:1px solid #e2e8f0}
+    .info:last-child{border-bottom:0}
+    .info strong{display:block;color:#102c4d}
+    label{display:block;font-weight:700;margin-top:15px}
+    input,select,textarea{display:block;width:100%;padding:12px;margin-top:6px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;background:white}
+    textarea{min-height:135px;resize:vertical}
+    input:focus,select:focus,textarea:focus{outline:2px solid #8bb7e2;outline-offset:1px}
+    button,.button{display:inline-block;border:0;border-radius:8px;padding:13px 18px;background:#102c4d;color:white;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer}
+    button{width:100%;margin-top:20px}
+    button:hover,.button:hover{background:#20527b}
+    #form-message{margin-top:14px;white-space:pre-wrap}
+    .help{font-size:13px;color:#64748b}
+    footer{background:#0b2038;color:#dbe5f0;text-align:center;padding:28px 15px}
+    footer a{color:#f0bd4c;text-decoration:none}
+    @media(max-width:700px){.layout{grid-template-columns:1fr}header{align-items:flex-start}nav{gap:12px}}
+  </style>
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">ToolNest</a>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact</a>
+    <a href="cart.html">Cart</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Contact Us</h1>
+  <p>Have a question? We're here to help with your enquiry.</p>
+</section>
+
+<main>
+  <div class="layout">
+    <section class="panel">
+      <h2>Get in Touch</h2>
+      <p>Contact ToolNest if you have questions about a product, an order or using our website.</p>
+
+      <div class="info">
+        <strong>Product Enquiries</strong>
+        <span>Ask about product availability, features and specifications.</span>
+      </div>
+
+      <div class="info">
+        <strong>Order Support</strong>
+        <span>Keep your order number available when asking about an existing order.</span>
+      </div>
+
+      <div class="info">
+        <strong>Online Store</strong>
+        <span>Browse our products and review your order before checkout.</span>
+        <p><a class="button" href="shop.html">Visit Shop</a></p>
+      </div>
+
+      <p class="help">Add your verified business email, phone number and business address here before publishing this page.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Send Us a Message</h2>
+
+      <form id="contact-form">
+        <label for="name">Full Name</label>
+        <input id="name" name="name" required maxlength="120" autocomplete="name">
+
+        <label for="email">Email Address</label>
+        <input id="email" name="email" type="email" required maxlength="160" autocomplete="email">
+
+        <label for="subject">Subject</label>
+        <select id="subject" name="subject" required>
+          <option value="">Choose a subject</option>
+          <option value="Product enquiry">Product enquiry</option>
+          <option value="Order enquiry">Order enquiry</option>
+          <option value="Delivery question">Delivery question</option>
+          <option value="Return or exchange">Return or exchange</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label for="orderNumber">Order Number (optional)</label>
+        <input id="orderNumber" name="orderNumber" maxlength="80">
+
+        <label for="message">Your Message</label>
+        <textarea id="message" name="message" required maxlength="3000"></textarea>
+
+        <button type="submit" id="send-button">Send Message</button>
+        <div id="form-message" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <p>© <span id="year"></span> ToolNest. All rights reserved.</p>
+  <p><a href="index.html">Home</a> · <a href="shop.html">Shop</a> · <a href="about.html">About Us</a></p>
+</footer>
+
+<script>
+'use strict';
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const form = document.getElementById('contact-form');
+const formMessage = document.getElementById('form-message');
+const sendButton = document.getElementById('send-button');
+
+form.addEventListener('submit', async function(event) {
+  event.preventDefault();
+
+  if (!form.reportValidity()) return;
+
+  sendButton.disabled = true;
+  sendButton.textContent = 'Sending...';
+  formMessage.textContent = '';
+
+  try {
+    const data = new FormData(form);
+
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: String(data.get('name')).trim(),
+        email: String(data.get('email')).trim(),
+        subject: data.get('subject'),
+        orderNumber: String(data.get('orderNumber') || '').trim(),
+        message: String(data.get('message')).trim()
+      })
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || 'Unable to send your message.');
+    }
+
+    formMessage.textContent = 'Your message was submitted successfully.';
+    formMessage.style.color = '#137333';
+    form.reset();
+
+  } catch (error) {
+    formMessage.textContent =
+      'Your message was not sent. The contact API may not be configured yet. Please try again later.';
+    formMessage.style.color = '#b42318';
+    console.error('Contact form error:', error);
+
+  } finally {
+    sendButton.disabled = false;
+    sendButton.textContent = 'Send Message';
+  }
+});
+</script>
+</body>
+</html>

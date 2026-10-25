@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Learn about ToolNest, your destination for tools, hardware and workshop essentials.">
+  <title>About Us | ToolNest</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;color:#172033;background:#f5f7fb;line-height:1.7}
+    header{background:#102c4d;color:white;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+    .logo{font-size:27px;font-weight:800;color:#f0bd4c;text-decoration:none}
+    nav{display:flex;gap:18px;flex-wrap:wrap}
+    nav a{color:white;text-decoration:none;font-weight:600}
+    nav a:hover{color:#f0bd4c}
+    .hero{padding:65px 20px;text-align:center;color:white;background:linear-gradient(120deg,#102c4d,#20527b)}
+    .hero h1{font-size:clamp(34px,5vw,48px);margin:0 0 12px}
+    .hero p{max-width:700px;margin:auto;color:#e2eaf4}
+    main{max-width:1050px;margin:auto;padding:35px 20px 60px}
+    .panel{background:white;padding:28px;border-radius:13px;margin-bottom:22px;border:1px solid #e2e8f0;box-shadow:0 5px 18px #102c4d08}
+    h2{color:#102c4d;margin-top:0}
+    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    .feature{background:white;border:1px solid #e2e8f0;border-radius:12px;padding:22px}
+    .feature .icon{font-size:32px}
+    .feature h3{color:#102c4d}
+    .cta{text-align:center;background:#102c4d;color:white;padding:32px;border-radius:13px;margin-top:25px}
+    .cta h2{color:white}
+    .button{display:inline-block;margin-top:10px;padding:12px 20px;background:#f0bd4c;color:#102c4d;text-decoration:none;border-radius:8px;font-weight:700}
+    footer{background:#0b2038;color:#dbe5f0;text-align:center;padding:28px 15px}
+    footer a{color:#f0bd4c;text-decoration:none}
+    @media(max-width:560px){header{align-items:flex-start}nav{gap:12px}.hero{padding:45px 20px}}
+  </style>
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">ToolNest</a>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact</a>
+    <a href="cart.html">Cart</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>About ToolNest</h1>
+  <p>Tools for your projects. Essentials for your workshop. A simpler way to shop.</p>
+</section>
+
+<main>
+  <section class="panel">
+    <h2>Who We Are</h2>
+    <p>Welcome to ToolNest, an online store designed to help customers explore tools, hardware and practical workshop accessories in one convenient place.</p>
+    <p>Whether you're working on a home improvement project, maintaining equipment or stocking a workshop, our goal is to make finding the right products straightforward.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Our Mission</h2>
+    <p>Our mission is to make tool shopping simple and convenient by presenting useful products clearly, providing helpful information and making the ordering process easy to follow.</p>
+  </section>
+
+  <h2>Why Choose ToolNest?</h2>
+  <section class="features">
+    <article class="feature">
+      <div class="icon" aria-hidden="true">🧰</div>
+      <h3>Useful Products</h3>
+      <p>Explore a selection of tools and accessories for different everyday tasks and projects.</p>
+    </article>
+    <article class="feature">
+      <div class="icon" aria-hidden="true">🛒</div>
+      <h3>Convenient Shopping</h3>
+      <p>Browse products, add items to your cart and review your order before checkout.</p>
+    </article>
+    <article class="feature">
+      <div class="icon" aria-hidden="true">💬</div>
+      <h3>Customer Support</h3>
+      <p>Contact us with questions about products, orders or the shopping process.</p>
+    </article>
+  </section>
+
+  <section class="cta">
+    <h2>Ready to Find Your Next Tool?</h2>
+    <p>Explore our shop and discover products for your next project.</p>
+    <a class="button" href="shop.html">Explore the Shop</a>
+    <a class="button" href="contact.html" style="margin-left:8px">Contact Us</a>
+  </section>
+</main>
+
+<footer>
+  <p>© <span id="year"></span> ToolNest. All rights reserved.</p>
+  <p><a href="shop.html">Shop</a> · <a href="contact.html">Contact Us</a> · <a href="index.html">Home</a></p>
+</footer>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
